@@ -5,6 +5,7 @@ import calTracker.demo.calTracker.Repos.MealRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -31,7 +32,27 @@ public class MealService {
 
     }
     public List<Meal> getMealByDate(String date){
+
         return mealRepo.findByDate(date);
     }
+    public List<String> mealTypesAlreadyEntered(String date){
+        List<Meal> currentMeals =mealRepo.findByDate(date);
+        List<String> mealsToBedeleted = new ArrayList<>();
 
+        List<String> mealTypesEntered = new ArrayList<>();
+       mealTypesEntered.add("Breakfast");
+       mealTypesEntered.add("Lunch");
+       mealTypesEntered.add("Dinner");
+        if(currentMeals.isEmpty()){
+            return mealTypesEntered;
+        }
+        for(int i =0; i <currentMeals.size();i++){
+           mealsToBedeleted.add(currentMeals.get(i).getMealType());
+
+
+        }
+        mealTypesEntered.removeAll(mealsToBedeleted);
+
+        return mealTypesEntered;
+    }
 }

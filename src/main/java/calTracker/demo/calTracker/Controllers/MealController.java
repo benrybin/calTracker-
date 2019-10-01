@@ -20,9 +20,9 @@ public class MealController {
 
        return mealService.save(meal);
     }
-    @GetMapping(path="/dailymeals/{date}")
+    @GetMapping(path="/dailymeals")
 
-    public List<Meal> getCurrentDaysMeals(@PathVariable String date){
+    public List<Meal> getCurrentDaysMeals(@RequestParam String date){
 
         return mealService.getMealByDate(date);
 
@@ -32,4 +32,9 @@ public class MealController {
     public Iterable<Meal> allMeals(){
         return mealService.findAll();
     }
+    @GetMapping(path = "/mealTypes")
+    public List<String> mealTypesEntered(@RequestParam String date){
+        return mealService.mealTypesAlreadyEntered(date);
+    }
+
 }
